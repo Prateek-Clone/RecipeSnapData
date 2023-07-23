@@ -87,6 +87,21 @@ router.get("/", async (req, res) => {
   }
 });
 
+// Get Data By Id
+router.get("/single/:id", async (req, res) => {
+  try {
+    const recipeId = req.params.id;
+    const recipe = await Recipes.findById(recipeId);
+    if (!recipe) {
+      return res.status(404).json({ error: "Recipe not found." });
+    }
+    res.json(recipe);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Server error" });
+  }
+});
+
 // Post Route For Comment
 router.post("/comment/:recipeId", async (req, res) => {
   try {
